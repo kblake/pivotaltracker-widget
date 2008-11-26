@@ -1,3 +1,4 @@
+#put story specific calls in here
 class Story
   def initialize(stories)
   end
