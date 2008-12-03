@@ -1,6 +1,6 @@
 require 'api'
 
-a = Api.new(3655, "5dfe63f99361824f34e3d79356275c2f")
+a = Api.new
 p a.get_project_info
 p a.get_story(277352)
 p a.get_stories

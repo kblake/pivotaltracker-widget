@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'httparty'
 require 'cgi'
+require 'yaml'
 
 class Api
   include HTTParty
@@ -8,11 +9,12 @@ class Api
   STORIES_PATH = "stories"
 
   default_params :output => 'xml'
-  format :xml
+  format :xml	
   
-  def initialize(project_id, token)
-    @project_id = project_id
-    @token = token
+  def initialize
+		config = get_credentials
+    @project_id = config['project_id']
+    @token = config['token']
   end
 
   def get_project_info
@@ -41,24 +43,13 @@ class Api
     end
     formatted_filters
   end
+
+	def get_credentials
+		begin
+			YAML.load_file("pivotal_credentials.yml")
+		rescue
+			puts "\nPlease rename the pivotal_credentials.yml.template to pivotal_credentials.yml and edit the file.  You'll need your project id and token as provided by Pivotal Tracker.\n\n"
+			exit
+		end
+	end
 end
-
-a = Api.new(3655, "5dfe63f99361824f34e3d79356275c2f")
-p a.get_project_info
-p a.get_story(277352)
-p a.get_stories
-p a.get_stories(:type=>"bug")
-# Api.add_story(:story=>{:name=>"", :description=>""})
-# Api.update_story(:story=>{})
-# Api.delete_story(277352)
-
-
-#is factory overkill?  maybe? maybe not?
-# project = Factory.project #Project.new
-# project.name
-# 
-# story = Factory.story(355)  #returns a Story.new
-# puts story.url
-# puts story.name
-# story.update_attributes(:name=>"some cool new name")
-# story.destroy
