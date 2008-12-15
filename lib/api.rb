@@ -6,10 +6,7 @@ require 'yaml'
 class Api
   include HTTParty
   BASE_URI= 'https://www.pivotaltracker.com/services/v1/projects/'
-  STORIES_PATH = "stories"
-
-  default_params :output => 'xml'
-  format :xml	
+  STORIES_PATH = "stories"	
   
   def initialize
 		config = get_credentials
@@ -31,7 +28,7 @@ class Api
   end
 
   def get_resource(story_id="", filter="")
-    self.class.get("#{BASE_URI}#{@project_id}/stories/#{story_id}?token=#{@token}&filter=#{filter}" )
+    Hash.from_xml(self.class.get("#{BASE_URI}#{@project_id}/stories/#{story_id}?token=#{@token}&filter=#{filter}"))
   end
 
   private
