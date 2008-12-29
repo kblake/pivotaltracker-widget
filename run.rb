@@ -1,3 +1,5 @@
+#!/usr/bin/ruby
+
 require File.join(File.dirname(__FILE__), "lib", "api")
 require "rubygems"
 require "highline/import"
@@ -17,7 +19,10 @@ loop do
 			p a.get_story(story)
  		}
 		menu.choice(:bugs){ p a.get_stories(:type=>"bug") }
-		menu.choice(:quit, "Exit program.") { exit }
+		menu.choice(:quit, "Exit program.") do	
+			say "Good bye!"			
+			exit 
+		end
 	end
 
 end
