@@ -1,8 +1,9 @@
 require File.join(File.dirname(__FILE__), "..","lib", "api")
+#require 'factory'
 
 describe Api do
-  it "should do something cool" do 
-    "this".should be
-    "that".should be
+  it "should initialize" do 
+		a = Api.new
+		a.should be
   end
 end
